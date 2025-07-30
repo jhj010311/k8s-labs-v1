@@ -16,6 +16,7 @@ RUN ./gradlew build --no-daemon --parallel --continue --stacktrace -x test || tr
 
 # 전체 소스 코드 복사 (실제 실행 시에는 볼륨으로 대체)
 COPY . .
+RUN chmod +x ./gradlew
 
 # 개발 환경에서는 디버깅 포트를 열어둡니다.
 EXPOSE 8080
