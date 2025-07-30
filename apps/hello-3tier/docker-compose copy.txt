@@ -1,0 +1,41 @@
+services:
+  ch6-db:
+    image: postgres
+    volumes:
+      - ch6-hello-data:/var/lib/postgresql/data
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    container_name: ch6-db
+    environment:
+      POSTGRES_USER: hellouser
+      POSTGRES_PASSWORD: hellouser123
+      POSTGRES_DB: hello
+
+  ch6-backend:
+    build: 
+      context: ./backend
+      dockerfile: Dockerfile
+    image: ch6-backend
+    container_name: ch6-backend
+    ports:
+      - "8080:8080"
+    depends_on:
+      - ch6-db
+
+
+  ch6-frontend:
+    build: 
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        - NEXT_PUBLIC_API_URL=http://localhost:8080
+    image: ch6-frontend
+    container_name: ch6-frontend
+    ports:
+      - "3000:3000"
+    environment:
+      NEXT_PUBLIC_API_URL: http://localhost:8080
+    depends_on:
+      - ch6-backend
+
+volumes:
+  ch6-hello-data:

@@ -1,0 +1,52 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgres-init-script
+data:
+  init.sql: |
+    CREATE TABLE greetings (
+    id SERIAL PRIMARY KEY,
+    lang_code VARCHAR(10) UNIQUE NOT NULL,
+    message VARCHAR(255) NOT NULL
+    );
+
+    INSERT INTO greetings (lang_code, message) VALUES ('kr', '안녕하세요!');
+    INSERT INTO greetings (lang_code, message) VALUES ('en', 'Hello!');
+    INSERT INTO greetings (lang_code, message) VALUES ('jp', 'こんにちは!');
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: db
+  labels:
+    app: db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: db
+  template:
+    metadata:
+      labels:
+        app: db
+    spec:
+      containers:
+        - name: db
+          image: postgres:15
+          ports:
+            - containerPort: 5432
+          env:
+            - name: POSTGRES_USER
+              value: "hellouser"
+            - name: POSTGRES_PASSWORD
+              value: "hellouser123"
+            - name: POSTGRES_DB
+              value: "hello"
+          volumeMounts:
+            - name: init-script
+              mountPath: /docker-entrypoint-initdb.d
+      volumes:
+        - name: init-script
+          configMap:
+            name: postgres-init-script
