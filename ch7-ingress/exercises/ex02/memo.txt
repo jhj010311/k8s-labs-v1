@@ -1,0 +1,2 @@
+minikube addons enable metallb
+minikube addons enable ingress
