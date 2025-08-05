@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
       - name: readiness-container        
-        image: captainyun/readiness-app:v1.0
+        image: captainyun/readiness-app:v2.0
         ports:
         - containerPort: 8080
         env:

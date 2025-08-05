@@ -1,0 +1,28 @@
+backend:
+  replicaCount: 1
+  image:
+    repository: captainyun/ddoddo-market-backend
+    tag: v1.0
+  service:
+    type: NodePort
+    port: 8080
+    targetPort: 8080
+    nodePort: 
+      enabled: true
+      port: 30001
+  deployment:
+    cors_allowed_origins: http://localhost:3000
+    env:
+      cloudflare:
+        account_id: "your-account-id"
+        access_key_id: "your-access-key-id"
+        secret_access_key: "your-secret-access-key"
+        bucket_name: "your-bucket-name"
+      supabase:
+        jwt_secret: "your-supabase-jwt-secret"
+        api_url: "https://xyzcompany.supabase.co"
+
+database:
+  name: ddoddo-market-db
+  user: root
+  password: "pass1234"

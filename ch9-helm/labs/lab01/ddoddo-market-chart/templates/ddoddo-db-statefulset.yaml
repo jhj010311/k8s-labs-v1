@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ include "ddoddo-market-chart.fullname" . }}-db-statefulset
+  labels:
+    {{- include "ddoddo-market-chart.labels" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "ddoddo-market-chart.name" . }}-db
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  serviceName: "ddoddo-market-db-service"
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ include "ddoddo-market-chart.name" . }}-db
+        app.kubernetes.io/instance: {{ .Release.Name }}
+    spec:
+      containers:
+      - name: postgres
+        image: postgres:15
+        ports:
+        - containerPort: 5432
+        envFrom:
+        - secretRef:
+            name: {{ include "ddoddo-market-chart.fullname" . }}-db-secret
+        - configMapRef:
+            name: {{ include "ddoddo-market-chart.fullname" . }}-db-configmap
+        volumeMounts:
+        - name: ddoddo-persistent-storage
+          mountPath: /var/lib/postgres
+  volumeClaimTemplates:
+  - metadata:
+      name: ddoddo-persistent-storage
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 1Gi
