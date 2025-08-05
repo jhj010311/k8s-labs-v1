@@ -57,7 +57,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: ./apps/ddoddo-market/backend
-          file: ./apps/ddoddo-market/backend/Dockerfile.prod
+          file: ./apps/ddoddo-market/backend/Dockerfile
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/k8s-labs-todo-backend:${{ github.sha }}
 
