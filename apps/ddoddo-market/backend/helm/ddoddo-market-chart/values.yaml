@@ -1,8 +1,8 @@
 backend:
   replicaCount: 1
   image:
-    repository: captainyun/ddoddo-market-backend
-    tag: v1.0
+    repository: jhj010311/ddoddo-backend
+    tag: 7ad349
   service:
     type: NodePort
     port: 8080
