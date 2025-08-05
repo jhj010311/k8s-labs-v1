@@ -9,7 +9,7 @@ backend:
     targetPort: 8080
     nodePort: 
       enabled: true
-      port: 30001
+      port: 30011
   deployment:
     cors_allowed_origins: http://localhost:3000
     env:
