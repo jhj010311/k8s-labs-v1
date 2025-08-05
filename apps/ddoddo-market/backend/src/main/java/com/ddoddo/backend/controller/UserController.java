@@ -28,4 +28,5 @@ public class UserController {
         UserInfoResponse userInfo = userService.getUserInfo(uid);
         return ResponseEntity.ok(userInfo);
     }
+    
 }
