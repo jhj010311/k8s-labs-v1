@@ -63,4 +63,4 @@ jobs:
 
       # 8. 생성된 이미지 태그 출력
       - name: Print image tag
-        run: echo "Image tagged with:${{ secrets.DOCKERHUB_USERNAME }}/tk8s-labs-todo-backend:${{ github.sha }}"
+        run: echo "Image tagged with:${{ secrets.DOCKERHUB_USERNAME }}/k8s-labs-todo-backend:${{ github.sha }}"
