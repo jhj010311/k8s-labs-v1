@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: ddoddo-market-db-service
+  labels: {{- include "ddoddo-market-chart.labels" . | nindent 4 }}
+spec:
+  ports:
+  - port: 3306
+  selector:
+    {{- include "ddoddo-market-chart.database.selectorLabels" . | nindent 4 }}
+  clusterIP: None
