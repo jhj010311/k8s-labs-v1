@@ -53,7 +53,6 @@ public class UserController {
 
         // JWT 토큰을 담은 응답 객체 반환
         return ResponseEntity.ok(new JwtResponse(jwt));
-        
     }
 }
 
