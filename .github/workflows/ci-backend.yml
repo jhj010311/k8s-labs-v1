@@ -69,13 +69,6 @@ jobs:
       - name: Print image tag
         run: echo "Image tagged with:${{ secrets.DOCKERHUB_USERNAME }}/k8s-labs-todo-backend:${{ github.sha }}"
 
-      # 8.5. Helm values.yaml의 image.tag 업데이트
-      - name: Update Helm values.yaml with new image tag
-        run: |
-          NEW_TAG=${GITHUB_SHA:0:7}
-          echo "Updating backend.image.tag to: $NEW_TAG"
-          yq e ".backend.image.tag = \"$NEW_TAG\"" -i manifests/values.yaml
-
       # 9. 매니페스트 저장소 체크아웃  
       - name: Checkout manifests repository
         uses: actions/checkout@v4
